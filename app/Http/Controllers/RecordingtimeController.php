@@ -29,10 +29,17 @@ class RecordingtimeController extends Controller
     // Проверить, есть ли у пользователя записи на выбранную дату
     $userHasAppointments = $contacts->where('users_id', Auth::id())->isNotEmpty();
 
+
     if ($userHasAppointments) {
-        // Если у пользователя есть записи, отобразить забронированные записи
-        $userAppointments = $contacts->where('users_id', Auth::id());
-        return view('dashboard', ['userAppointments' => $userAppointments]);
+        // If the user has appointments, display the booked appointments
+        $user = $contacts->where('users_id', Auth::id())->where('day', $request->input('airdatepicker'))->first();
+    
+        $recordingTimesId = $user->recordingtimes_id;
+        
+        $availableRecordingTimes = Recordingtime::where('id', $recordingTimesId)->get();
+        
+    
+        return view('dashboard', ['user' => $user, 'availableRecordingTimes' => $availableRecordingTimes]);
     } else {
         // Если у пользователя нет записей, отобразить доступные времена записи
         $allRecordingTimes = Recordingtime::all();
@@ -68,7 +75,14 @@ class RecordingtimeController extends Controller
         // Возвращаем представление с обновленным списком контактов
         return redirect()->route('dashboard')->with('contacts', $contacts);
     }
-
+    public function delete($id)
+    {
+        $contact = Contact::find($id);
+        if ($contact) {
+            $contact->delete();
+        }
+        return redirect()->route('dashboard');
+    }
 
 
 }

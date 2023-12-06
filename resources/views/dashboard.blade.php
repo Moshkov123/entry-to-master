@@ -48,10 +48,25 @@
                     <table class="table mb-4">
                         <thead>
                             <tr>
-                                <th scope="col">Available Times</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Свободное время</th>
+                                <th scope="col">кнопка</th>
                             </tr>
                         </thead>
+                        @if(isset($user))
+                        @foreach($availableRecordingTimes as $time)
+                        <tr>
+                            <td>{{$time->time }}</td>
+                            <td>
+                                
+                                <form action="{{ route('dashboard.delete', ['id' => $user->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Отменить запись</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @else
                         @foreach($availableRecordingTimes as $time)
                         <tr>
                             <td>{{$time->time }}</td>
@@ -59,11 +74,12 @@
                                 <form method="POST" action="{{ route('book-appointment') }}">
                                     @csrf
                                     <input type="hidden" name="selectedTime" value="{{ $time->id }}">
-                                    <button type="submit" class="btn btn-danger">Book Appointment</button>
+                                    <button type="submit" class="btn btn-danger">записаться</button>
                                 </form>
                             </td>
                         </tr>
                         @endforeach
+                        @endif
                     </table>
                     @else
                     <p>Нет свободнных записей</p>

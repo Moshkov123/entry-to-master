@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [RecordingtimeController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [RecordingtimeController::class, 'check']);
     Route::post('/dashboard/book-appointment', [RecordingtimeController::class, 'bookAppointment'])->name('book-appointment');
-
+    Route::delete('/dashboard/{id}', [RecordingtimeController::class, 'delete'])->name('dashboard.delete'); 
 });
 
 require __DIR__.'/auth.php';
