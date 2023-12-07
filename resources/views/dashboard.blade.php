@@ -10,7 +10,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Запись к мастеру') }}
         </h2>
     </x-slot>
 
@@ -19,7 +19,6 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div id="calendar"></div>
-                    <h4 class="text-center my-3 pb-3">Запись к мастеру</h4>
 
                     <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
                         method="POST" action="/dashboard">
